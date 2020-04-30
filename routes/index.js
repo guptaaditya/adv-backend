@@ -1,9 +1,24 @@
-var express = require('express');
-var router = express.Router();
+var usersRouter = require('./users');
+var linksRouter = require('./links');
+var overlaysRouter = require('./overlays');
+var membershipRouter = require('./membership');
+var adminRouter = require('./admin');
+var { router: defaultProxyRouter, proxyRouter } = require('./proxyService');
+const cors = require('cors');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+function initializeRouting(app) {
+  app.options('*', cors());
+  app.post('*', cors());
+  app.put('*', cors());
+  app.get('*', cors());
+  app.delete('*', cors());
+  app.use('/user', usersRouter);
+  app.use('/link', linksRouter);
+  app.use('/membership', membershipRouter);
+  app.use('/overlay', overlaysRouter);
+  app.use('/admin', adminRouter);
+  app.use('/proxy', proxyRouter);
+  app.use('/:shortLinkHash', defaultProxyRouter);
+}
 
-module.exports = router;
+module.exports = initializeRouting;

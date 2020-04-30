@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/advertise-overlays/static/css/main.889c0f9c.chunk.css",
+    "main.js": "/advertise-overlays/static/js/main.37caf0e2.chunk.js",
+    "main.js.map": "/advertise-overlays/static/js/main.37caf0e2.chunk.js.map",
+    "runtime-main.js": "/advertise-overlays/static/js/runtime-main.c39972c4.js",
+    "runtime-main.js.map": "/advertise-overlays/static/js/runtime-main.c39972c4.js.map",
+    "static/css/2.65620810.chunk.css": "/advertise-overlays/static/css/2.65620810.chunk.css",
+    "static/js/2.169cd72a.chunk.js": "/advertise-overlays/static/js/2.169cd72a.chunk.js",
+    "static/js/2.169cd72a.chunk.js.map": "/advertise-overlays/static/js/2.169cd72a.chunk.js.map",
+    "index.html": "/advertise-overlays/index.html",
+    "precache-manifest.c699c1dd529c9d08c5461510ca885041.js": "/advertise-overlays/precache-manifest.c699c1dd529c9d08c5461510ca885041.js",
+    "service-worker.js": "/advertise-overlays/service-worker.js",
+    "static/css/2.65620810.chunk.css.map": "/advertise-overlays/static/css/2.65620810.chunk.css.map",
+    "static/css/main.889c0f9c.chunk.css.map": "/advertise-overlays/static/css/main.889c0f9c.chunk.css.map",
+    "static/js/2.169cd72a.chunk.js.LICENSE": "/advertise-overlays/static/js/2.169cd72a.chunk.js.LICENSE",
+    "static/media/1.png": "/advertise-overlays/static/media/1.f4cf5c30.png",
+    "static/media/2.png": "/advertise-overlays/static/media/2.b6fb7714.png",
+    "static/media/bar.png": "/advertise-overlays/static/media/bar.035a2414.png",
+    "static/media/index.scss": "/advertise-overlays/static/media/outline-icons.ef60a4f6.woff",
+    "static/media/calltoaction.png": "/advertise-overlays/static/media/calltoaction.c9be8db5.png",
+    "static/media/contentsuggestion.png": "/advertise-overlays/static/media/contentsuggestion.7ada8da6.png",
+    "static/media/custom.png": "/advertise-overlays/static/media/custom.b56afc39.png",
+    "static/media/fullpage.png": "/advertise-overlays/static/media/fullpage.487e5b99.png",
+    "static/media/notification.png": "/advertise-overlays/static/media/notification.006c591d.png",
+    "static/media/optin.png": "/advertise-overlays/static/media/optin.d063e1e7.png",
+    "static/media/popup.png": "/advertise-overlays/static/media/popup.d063e1e7.png",
+    "static/media/timer.png": "/advertise-overlays/static/media/timer.ee70768c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c39972c4.js",
+    "static/css/2.65620810.chunk.css",
+    "static/js/2.169cd72a.chunk.js",
+    "static/css/main.889c0f9c.chunk.css",
+    "static/js/main.37caf0e2.chunk.js"
+  ]
+}

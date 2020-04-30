@@ -1,0 +1,8 @@
+module.exports = {
+    EXPIRY_VERIFICATION_CODE_MINUTES: 5,
+    EXPIRY_RESET_TOKEN_MINUTES: 5,
+    EXPIRY_LOGIN_SHORT_TERM_TOKEN: '24h',
+    EXPIRY_LOGIN_LONG_TERM_TOKEN: '1000d',
+    SHORT_LINK_DOMAIN: 'http://utv.com/',
+    ADMIN_TYPE: 'Powerful-Superuser',
+}
