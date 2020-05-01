@@ -20,25 +20,30 @@
                 position: fixed;
                 bottom: 10;
             }
+
+            .force-hide {
+                display: none;
+            }
         </style>
     </head>
     <body>
         <iframe width='100%' height='100%' id='iframe'></iframe>
         
+        <div id='overlay' class='force-hide'>{OVERLAY_HTML}</div>
         <script type="text/javascript">
             let iframe = document.getElementById('iframe');
-            let overlayId='{OVERLAY_ID}';
+            // let overlayId='{OVERLAY_ID}';
             iframe.onload = function() {
                 if(!this.contentDocument) {
                     iframeContentLoadError();
                 }
-                if (overlayId) {
-                    fetch(`/proxy/overlay/${overlayId}`)
-                        .then(r => r.text())
-                        .then(data => {
-                            document.getElementById('overlay').innerHTML = data;
-                        });
-                }
+                // if (overlayId) {
+                //     fetch(`/proxy/overlay/${overlayId}`)
+                //         .then(r => r.text())
+                //         .then(data => {
+                //             document.getElementById('overlay').innerHTML = data;
+                //         });
+                // }
             };
 
             function iframeContentLoadError() {
@@ -59,7 +64,19 @@
             }
 
             iframeContentLoadError();
+
+            function toggleClass(element, classname) {
+                if (element.classList) {
+                  element.classList.toggle(classname);
+                } else {
+                    const classes = element.className.split(" ");
+                    const i = classes.indexOf(classname);
+                    if (i >= 0) classes.splice(i, 1);
+                    else classes.push(classname);
+                    element.className = classes.join(" ");
+                }
+            }
+            setTimeout(toggleClass, 0, document.getElementById('overlay'), 'force-hide');
         </script>
-        <div id='overlay'></div>
     </body>
 </html>
