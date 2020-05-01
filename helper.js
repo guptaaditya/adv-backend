@@ -48,10 +48,20 @@ function getRequestUrl(req) {
     return reqUrl;
 }
 
+function promisifyFunc(asyncFunc) {
+    return new Promise((resolve, reject) => {
+        asyncFunc((err, ...args) => {
+            if (err) reject (err);
+            resolve(args);
+        });
+    })
+}
+
 module.exports = {
     hashPass,
     sendEmail,
     hashVerify,
     initializeHelpers,
     getRequestUrl,
+    promisifyFunc,
 };
