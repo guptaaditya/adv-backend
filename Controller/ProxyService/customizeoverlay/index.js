@@ -28,10 +28,10 @@ const closeButton = {
 
 function getFeatureFlags(overlay) {
     return {
-        shouldShowOnPageLoad: overlay.shouldShowOnPageLoad || true,
-        showDelay: overlay.showDelay || 0,
-        shouldFadePageBackground: overlay.shouldFadePageBackground || false,
-        positionedBottom: overlay.positionedBottom || true,
+        shouldShowOnPageLoad: _.get(overlay, 'shouldShowOnPageLoad', true),
+        showDelay: _.get(overlay, 'showDelay', 0),
+        shouldFadePageBackground: _.get(overlay, 'shouldFadePageBackground', false),
+        positionedBottom: _.get(overlay, 'positionedBottom', true),
         closeButton: overlay.closeButton || {
             ...closeButton,
         },

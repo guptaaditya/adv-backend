@@ -10,8 +10,9 @@ async function getLinkPage(req, res, next) {
         // Read HTML File and replace its target url identifier, and send it
         let htmlData = fs.readFileSync('./public/helperIndexHtml.html',  {encoding:'utf8', flag:'r'}); 
         htmlData = _.replace(htmlData, /{TARGET_URL}/g, targetUrl);
-        const overlayHTML = await getOverlayHTMLbyId(overlayId);
-        htmlData = _.replace(htmlData, /{OVERLAY_HTML}/g, overlayHTML || '');
+        const { outerHtml = '', shouldShowOnPageLoad, showDelay = 0 } = await getOverlayHTMLbyId(overlayId);
+        htmlData = _.replace(htmlData, /{OVERLAY_HTML}/g, outerHtml);
+        htmlData = _.replace(htmlData, /{SHOW_DELAY}/g, showDelay);
         return res.status(200).send(htmlData);
     } catch (e) {
         return res.status(500).json({ message: 'Server Error' });
@@ -34,9 +35,9 @@ async function getOverlayHTMLbyId(overlayId) {
 async function getOverlay(req, res, next) {
     const { overlayId } = req.params;
     try {
-        const overlayHTML = await getOverlayHTMLbyId(overlayId);
-        if (overlayHTML) {
-            return res.status(200).send(overlayHTML);
+        const { outerHtml } = await getOverlayHTMLbyId(overlayId);
+        if (outerHtml) {
+            return res.status(200).send(outerHtml);
         }
         return res.status(400).json({ message: 'Bad request. Overlay not available' });
     } catch (e) {

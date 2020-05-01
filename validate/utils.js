@@ -5,7 +5,10 @@ function parsePermittedParams(permittedParams, data) {
         data, 
         permittedParams
     );
-    const nonEmptyParams = _.pickBy(paramsParsed, _.identity); // Non empty values
+    const nonEmptyParams = _.pickBy(paramsParsed, (val) => {
+        if(_.isBoolean(val) || _.isNumber(val)) return true;
+        return _.identity(val);
+    }); // Non empty values
     return nonEmptyParams;
 
 }

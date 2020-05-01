@@ -4,6 +4,9 @@ function renderOverlay(featureFlags) {
         widthClassName = '',
         templateClassName = '',
         fontSizeClassName = '',
+        shouldShowOnPageLoad,
+        showDelay,
+        shouldFadePageBackground,
         showLogo,
         showMessage,
         showInput,
@@ -57,10 +60,10 @@ function renderOverlay(featureFlags) {
         : '';
 
     const closeButtonHtml = closeButton.isVisible 
-        ? `<div class='close-button' style="color: ${closeButton.color};">x</div>` 
+        ? `<div onclick="onClosehandler()" class='close-button' style="color: ${closeButton.color};">x</div>` 
         : '';
     
-    return `
+    const innerOverlayHtml = `
         <div 
             class='${widthClassName} ${fontSizeClassName} ${templateClassName} ${positionClass}'
             style='background-color: ${background.color}; background-image: url(${background.image});'
@@ -81,7 +84,27 @@ function renderOverlay(featureFlags) {
             </div>
             ${closeButtonHtml}
         </div>
+        <script type="text/javascript">
+            function onClosehandler() {
+                const overlayNode = document.getElementById('overlay');
+                const fadeBg = document.querySelector('.fade-background');
+                overlayNode.parentNode.removeChild(overlayNode);
+                if (fadeBg) {
+                    fadeBg.parentNode.removeChild(fadeBg);
+                }
+            }
+        </script>
     `;
+
+    let outerHtml = `<div id='overlay' class='force-hide'>${innerOverlayHtml}</div>`
+
+    if (shouldFadePageBackground) {
+        outerHtml = `<div class='fade-background'></div>${outerHtml}`
+    }
+    return {
+        outerHtml,
+        ...featureFlags,
+    };
 }
 
 module.exports = {

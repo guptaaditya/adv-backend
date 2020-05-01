@@ -21,15 +21,29 @@
                 bottom: 10;
             }
 
+            .position-top {
+                position: fixed;
+                top: 10;
+            }
+
             .force-hide {
                 display: none;
+            }
+
+            .fade-background {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                background-color: #000000;
+                opacity: 0.7;
             }
         </style>
     </head>
     <body>
         <iframe width='100%' height='100%' id='iframe'></iframe>
-        
-        <div id='overlay' class='force-hide'>{OVERLAY_HTML}</div>
+        {OVERLAY_HTML}
         <script type="text/javascript">
             let iframe = document.getElementById('iframe');
             // let overlayId='{OVERLAY_ID}';
@@ -76,7 +90,7 @@
                     element.className = classes.join(" ");
                 }
             }
-            setTimeout(toggleClass, 0, document.getElementById('overlay'), 'force-hide');
+            setTimeout(toggleClass, Number({SHOW_DELAY}) * 1000, document.getElementById('overlay'), 'force-hide');
         </script>
     </body>
 </html>
