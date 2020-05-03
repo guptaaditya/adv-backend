@@ -1,6 +1,9 @@
 function Links(mongoose) {
     const LinksSchema = new mongoose.Schema({
-        overlayId: String,
+        overlay: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Overlays'
+        },
         targetUrl: { type: String, required: true },
         shortUrl: String,
         createdBy: { type: String, required: true },
@@ -26,10 +29,10 @@ async function overlayExists(overlayId) {
 
 async function documentValidateOverlayId(next) {
     const link = this;
-    if (!link.isModified('overlayId') || !link.overlayId) {
+    if (!link.isModified('overlay') || !link.overlay) {
         return next()
     };
-    const isOverlayIdValid = await overlayExists(link.overlayId);
+    const isOverlayIdValid = await overlayExists(link.overlay);
     if (!isOverlayIdValid) {
         throw { status: 400, message: `Overlay doesn't exist` };
     }
@@ -39,11 +42,11 @@ async function documentValidateOverlayId(next) {
 function attachHooks(schema) {
     schema.pre('save', documentValidateOverlayId);
     schema.pre('findOneAndUpdate', async function (next) {
-        const { overlayId = '' } = this.getUpdate();
-        if (!overlayId) {
+        const { overlay = '' } = this.getUpdate();
+        if (!overlay) {
             return next()
         };
-        const isOverlayIdValid = await overlayExists(overlayId);
+        const isOverlayIdValid = await overlayExists(overlay);
         if (!isOverlayIdValid) {
             throw { status: 400, message: `Overlay doesn't exist` };
         }

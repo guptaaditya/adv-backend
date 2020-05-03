@@ -4,6 +4,7 @@ function getUser(userModel) {
         name: userModel.name,
         membership: getMembership(userModel.membership),
         timezone: userModel.timezone,
+        isVerified: userModel.isVerified,
     }
 }
 

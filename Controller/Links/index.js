@@ -10,7 +10,7 @@ async function createLink(req, res, next) {
         const createdLink = await Link.create({
             targetUrl,
             createdBy: username,
-            overlayId,
+            overlay: overlayId,
         });
         if (createdLink.id) {
             const shortLinkHash = btoa(createdLink.id);
@@ -39,7 +39,7 @@ async function updateLink(req, res, next) {
     try {
         const updateLink = await Link.findOneAndUpdate(
             { _id: linkId, createdBy: username, isDeleted: false },
-            { targetUrl, overlayId },
+            { targetUrl, overlay: overlayId },
             { new: true }
         );
         if (updateLink) {

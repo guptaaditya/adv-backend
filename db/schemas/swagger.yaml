@@ -486,7 +486,7 @@ paths:
       - in: "path"
         required: true
         name: "overlayId"
-        type: "integer"
+        type: "string"
       - in: "body"
         name: "body"
         required: true
@@ -782,12 +782,12 @@ definitions:
   CreateOverlay:
     type: "object"
     properties:
-      type:
+      overlayType:
         type: "string"
       category:
         type: "string"
       template:
-        type: "integer"
+        type: "string"
       name:
         type: "string"
     required:
@@ -884,9 +884,7 @@ definitions:
   AffiliatesCount:
     type: "object"
     properties:
-      id:
-        type: "integer"
-      name:
+      username:
         type: "string"
       affiliate1:
         type: "integer"

@@ -10,8 +10,8 @@ const { initializeHelpers } = require('./helper');
 
 dotenv.config();
 var app = express();
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(logger('dev'));

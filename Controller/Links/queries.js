@@ -3,7 +3,7 @@ function getLink(linkModel) {
         id: linkModel.id,
         shortUrl: linkModel.shortUrl,
         createdOn: linkModel.createdOn,
-        overlayId: linkModel.overlayId,
+        overlayId: linkModel.overlay._id.toJSON(),
         targetUrl: linkModel.targetUrl,
         visits: linkModel.visits,
     }

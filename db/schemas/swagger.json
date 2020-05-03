@@ -1,0 +1,1362 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "These APIs cater to UTV platform",
+    "version": "1.0.0",
+    "title": "User To Views",
+    "contact": {
+      "email": "guptaaditya24@gmail.com"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    },
+    {
+      "name": "membership",
+      "description": "Operations related to membership"
+    },
+    {
+      "name": "statistics",
+      "description": "The details of overlays, links, visits etc."
+    },
+    {
+      "name": "links",
+      "description": "The operations on Link, like shortening, attaching overlay"
+    },
+    {
+      "name": "overlays",
+      "description": "The operations on overlays, like creating, updating, deleting"
+    },
+    {
+      "name": "admin",
+      "description": "The operations that can be performed only by admin user"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/admin/payouts": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get list of all affiliates who brought in paid members",
+        "description": "This can only be done by the admin user.",
+        "operationId": "getAffiliatesWithPaidMembersUnderThem",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get users with paid members under them and second level",
+            "schema": {
+              "$ref": "#/definitions/AffiliatesList"
+            }
+          },
+          "400": {
+            "description": "Invalid/no token"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "One click payout to affiliates API",
+        "description": "",
+        "operationId": "payoutAllAffiliates",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmation that batch payout has been triggered"
+          },
+          "400": {
+            "description": "Invalid/no token"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "description": "This can only be done by the logged out user.",
+        "operationId": "createUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User details object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User-signup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully created user"
+          },
+          "400": {
+            "description": "Invalid username/password/name"
+          },
+          "403": {
+            "description": "User with the username is already registered"
+          },
+          "default": {
+            "description": "successfully created user"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user password",
+        "description": "This can only be done by the logged in user, i.e. with the Bearer token",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User password",
+            "schema": {
+              "$ref": "#/definitions/User-update"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated user details"
+          },
+          "401": {
+            "description": "Invalid token/Token expired"
+          },
+          "403": {
+            "description": "Invalid token. Not authorized for the operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get requesting user details",
+        "description": "This can be done only by logged in user",
+        "operationId": "getUserDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User-details"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs user into the system for long term/short term",
+        "description": "Can be performed only by logged out user",
+        "operationId": "loginUser",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Basic"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/User-Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          },
+          "401": {
+            "description": "Authentication token missing"
+          },
+          "403": {
+            "description": "Count of failed login attempts exceeded the threshold"
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "Can be performed by logged in user only",
+        "operationId": "logoutUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "No login token found"
+          }
+        }
+      }
+    },
+    "/user/verify": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Verifies user against the verification code",
+        "description": "Can be performed only by logged out user",
+        "operationId": "verifyUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User name, verification code received in email",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User-verify"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token on successful verification which is to be used to reset password",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          },
+          "403": {
+            "description": "Count of failed login attempts exceeded the threshold"
+          }
+        }
+      }
+    },
+    "/user/{username}/verification": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Sends verification code to username/registered email address",
+        "description": "Can be performed by logged out user only",
+        "operationId": "userVerificationCode",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The username is user's registered email address",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "No registered user found"
+          }
+        }
+      }
+    },
+    "/membership": {
+      "get": {
+        "tags": [
+          "membership"
+        ],
+        "summary": "Get user membership details",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "getUserMembership",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Membership details",
+            "schema": {
+              "$ref": "#/definitions/Membership-details"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "membership"
+        ],
+        "summary": "Upgrade user membership after payment on paypal.",
+        "description": "This can only be called by paypal system",
+        "operationId": "upgradeUserMembership",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Paypal payment information object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PaypalPayment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Membership details",
+            "schema": {
+              "$ref": "#/definitions/Membership-details"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      }
+    },
+    "/usage": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "Get logged in user's usage overview",
+        "description": "Statistics of, Overlays created, links created, and links/overlays visited",
+        "operationId": "getUsage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User's usage details",
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      }
+    },
+    "/link": {
+      "get": {
+        "tags": [
+          "links"
+        ],
+        "summary": "Get list of links created by user",
+        "description": "Retrieve all the links created by user",
+        "operationId": "getAllLinks",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created links",
+            "schema": {
+              "$ref": "#/definitions/LinksList"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "links"
+        ],
+        "summary": "Create shortened link with overlay and targetUrl",
+        "description": "This can only be called by logged in user",
+        "operationId": "createNewLink",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Require targetUrl, overlay (optional) to create a new link",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateLink"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created link details",
+            "schema": {
+              "$ref": "#/definitions/Link"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          }
+        }
+      }
+    },
+    "/link/{linkId}": {
+      "put": {
+        "tags": [
+          "links"
+        ],
+        "summary": "Updated specific link created by user",
+        "operationId": "updateLinkDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "linkId",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Require targetUrl, overlay (optional)",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateLink"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated Link details",
+            "schema": {
+              "$ref": "#/definitions/Link"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "links"
+        ],
+        "summary": "Get details of specific link created by user",
+        "operationId": "getLinkDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "linkId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created link",
+            "schema": {
+              "$ref": "#/definitions/Link"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "links"
+        ],
+        "summary": "Delete the link created by user",
+        "operationId": "deleteLinkDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "linkId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmation that the link is deleted"
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      }
+    },
+    "/overlay": {
+      "get": {
+        "tags": [
+          "overlays"
+        ],
+        "summary": "Get list of overlays created by user",
+        "description": "Retrieve all the overlays created by user",
+        "operationId": "getAllOverlays",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created overlays",
+            "schema": {
+              "$ref": "#/definitions/OverlaysList"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "overlays"
+        ],
+        "summary": "Create overlay and customize it",
+        "description": "This can only be called by paid members",
+        "operationId": "createNewOverlay",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Require type, category, template, name to create a new overlay",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateOverlay"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created overlay details",
+            "schema": {
+              "$ref": "#/definitions/Overlay"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          }
+        }
+      }
+    },
+    "/overlay/{overlayId}": {
+      "put": {
+        "tags": [
+          "overlays"
+        ],
+        "summary": "Updated specific overlay created by user",
+        "operationId": "updateOverlayDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "overlayId",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateOverlay"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated Overlay details",
+            "schema": {
+              "$ref": "#/definitions/Overlay"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "overlays"
+        ],
+        "summary": "Get details of specific overlay created by user",
+        "operationId": "getOverlayDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "overlayId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created overlay",
+            "schema": {
+              "$ref": "#/definitions/Overlay"
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "overlays"
+        ],
+        "summary": "Delete the Overlay created by user",
+        "operationId": "deleteOverlayDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "Bearer"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "overlayId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmation that the Overlay is deleted"
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "User unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User-Login": {
+      "type": "object",
+      "properties": {
+        "remember": {
+          "type": "boolean"
+        }
+      }
+    },
+    "User-details": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "User-signup": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "User-verify": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "verificationCode": {
+          "type": "string"
+        }
+      }
+    },
+    "User-update": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "timeone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "Membership-details": {
+      "type": "object",
+      "properties": {
+        "planName": {
+          "type": "string"
+        },
+        "linksLimit": {
+          "type": "integer"
+        },
+        "overlaysLimit": {
+          "type": "integer"
+        },
+        "shareLinkLimit": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "upgradePrice": {
+          "type": "integer"
+        },
+        "upgradeCurrency": {
+          "type": "string"
+        },
+        "upgradeCurrencySymbol": {
+          "type": "string"
+        }
+      }
+    },
+    "PaypalPayment": {
+      "type": "object",
+      "properties": {
+        "event_type": {
+          "type": "string"
+        }
+      }
+    },
+    "Usage": {
+      "type": "object",
+      "properties": {
+        "overview": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dashboard"
+          }
+        },
+        "top5Links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "top5Overlays": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Overlay"
+          }
+        }
+      }
+    },
+    "Dashboard": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Site Visits/Overlays/Links"
+        },
+        "value": {
+          "type": "integer"
+        }
+      }
+    },
+    "LinksList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Link"
+      }
+    },
+    "OverlaysList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Overlay"
+      }
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "shortUrl": {
+          "type": "string",
+          "example": "http://utv.com/v/pksd5ds"
+        },
+        "visits": {
+          "type": "integer"
+        },
+        "overlayId": {
+          "type": "string"
+        },
+        "targetUrl": {
+          "type": "string"
+        },
+        "createdOn": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "shortUrl",
+        "targetUrl",
+        "createdOn"
+      ]
+    },
+    "CreateLink": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "type": "string"
+        },
+        "targetUrl": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetUrl"
+      ]
+    },
+    "UpdateLink": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "type": "string"
+        },
+        "targetUrl": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetUrl",
+        "id"
+      ]
+    },
+    "Overlay": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "template": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "example": "Commercials Cadbury"
+        },
+        "visits": {
+          "type": "integer"
+        },
+        "shouldShowOnPageLoad": {
+          "type": "boolean"
+        },
+        "showDelay": {
+          "type": "integer",
+          "description": "time in milli seconds"
+        },
+        "shouldFadePageBackground": {
+          "type": "boolean"
+        },
+        "positionedBottom": {
+          "type": "boolean"
+        },
+        "closeButton": {
+          "type": "object",
+          "properties": {
+            "isVisible": {
+              "type": "boolean"
+            },
+            "color": {
+              "type": "string",
+              "example": "#fff"
+            }
+          }
+        },
+        "logo": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Url for redirection on click of logo"
+            },
+            "image": {
+              "type": "string",
+              "description": "Logo image url"
+            }
+          }
+        },
+        "background": {
+          "type": "object",
+          "properties": {
+            "image": {
+              "type": "string",
+              "description": "Background image url"
+            },
+            "color": {
+              "type": "string",
+              "description": "Background color",
+              "example": "#fff"
+            }
+          }
+        },
+        "message": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "Text message to be displayed"
+            },
+            "color": {
+              "type": "string",
+              "description": "Text message font color",
+              "example": "#fff"
+            }
+          }
+        },
+        "input": {
+          "type": "object",
+          "properties": {
+            "placeholder": {
+              "type": "string",
+              "description": "Placeholder text for input box"
+            },
+            "color": {
+              "type": "string",
+              "description": "Input box background color",
+              "example": "#fff"
+            }
+          }
+        },
+        "button": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Text displayed on button"
+            },
+            "color": {
+              "type": "string",
+              "description": "Button background color",
+              "example": "#fff"
+            },
+            "textColor": {
+              "type": "string",
+              "description": "Button font/text color",
+              "example": "#fff"
+            }
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "category",
+        "template"
+      ]
+    },
+    "CreateOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayType": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "category",
+        "template",
+        "name"
+      ]
+    },
+    "UpdateOverlay": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "shouldShowOnPageLoad": {
+          "type": "boolean"
+        },
+        "showDelay": {
+          "type": "integer",
+          "description": "time in milli seconds"
+        },
+        "shouldFadePageBackground": {
+          "type": "boolean"
+        },
+        "positionedBottom": {
+          "type": "boolean"
+        },
+        "closeButton": {
+          "type": "object",
+          "properties": {
+            "isVisible": {
+              "type": "boolean"
+            },
+            "color": {
+              "type": "string",
+              "example": "#fff"
+            }
+          }
+        },
+        "logo": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Url for redirection on click of logo"
+            },
+            "image": {
+              "type": "string",
+              "description": "Logo image url"
+            }
+          }
+        },
+        "background": {
+          "type": "object",
+          "properties": {
+            "image": {
+              "type": "string",
+              "description": "Background image url"
+            },
+            "color": {
+              "type": "string",
+              "description": "Background color",
+              "example": "#fff"
+            }
+          }
+        },
+        "message": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "Text message to be displayed"
+            },
+            "color": {
+              "type": "string",
+              "description": "Text message font color",
+              "example": "#fff"
+            }
+          }
+        },
+        "input": {
+          "type": "object",
+          "properties": {
+            "placeholder": {
+              "type": "string",
+              "description": "Placeholder text for input box"
+            },
+            "color": {
+              "type": "string",
+              "description": "Input box background color",
+              "example": "#fff"
+            }
+          }
+        },
+        "button": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Text displayed on button"
+            },
+            "color": {
+              "type": "string",
+              "description": "Button background color",
+              "example": "#fff"
+            },
+            "textColor": {
+              "type": "string",
+              "description": "Button font/text color",
+              "example": "#fff"
+            }
+          }
+        },
+        "socialIcons": {
+          "type": "object",
+          "properties": {
+            "facebook": {
+              "type": "string",
+              "description": "URL to facebook page"
+            },
+            "twitter": {
+              "type": "string",
+              "description": "URL to twitter handle"
+            }
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "AffiliatesCount": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "affiliate1": {
+          "type": "integer"
+        },
+        "affiliate2": {
+          "type": "integer"
+        }
+      }
+    },
+    "AffiliatesList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AffiliatesCount"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

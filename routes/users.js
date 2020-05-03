@@ -22,6 +22,12 @@ router.post(
 );
 
 router.get(
+    '/verify/:verificationToken', 
+    validators.verifyEmail, 
+    controller.verifyUserEmail
+);
+
+router.get(
     '/:username/verification', 
     validators.getUserVerificationCode, 
     authController.getUserVerficiationCode

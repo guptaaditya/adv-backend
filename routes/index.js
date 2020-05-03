@@ -3,6 +3,7 @@ var linksRouter = require('./links');
 var overlaysRouter = require('./overlays');
 var membershipRouter = require('./membership');
 var adminRouter = require('./admin');
+var usageRouter = require('./usage');
 var { router: defaultProxyRouter, proxyRouter } = require('./proxyService');
 const cors = require('cors');
 
@@ -13,6 +14,7 @@ function initializeRouting(app) {
   app.get('*', cors());
   app.delete('*', cors());
   app.use('/user', usersRouter);
+  app.use('/usage', usageRouter);
   app.use('/link', linksRouter);
   app.use('/membership', membershipRouter);
   app.use('/overlay', overlaysRouter);

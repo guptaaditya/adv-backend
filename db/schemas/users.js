@@ -9,6 +9,7 @@ function Users(mongoose) {
         timezone: { type: String, default: 'America/New_York' },
         registeredOn: { type: Date, default: Date.now },
         isDeleted: { type: Boolean, default: false },
+        isVerified: { type: Boolean, default: false },
         membership: {
             type: {
                 planName: String,
