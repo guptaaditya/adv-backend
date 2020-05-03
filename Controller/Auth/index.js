@@ -57,7 +57,7 @@ async function preAuthorization(req, res, next) {
         if (!username) {
             return res.status(403).json({ message: 'Invalid token' });
         }
-        req.user = { username, usertype };
+        req.user = { username, role: usertype };
         next();
     } catch (e) {
         return res.status(401).json({ message: 'Invalid token. Token has expired' });
