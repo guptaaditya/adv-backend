@@ -14,7 +14,7 @@ async function getUserLogIn(req, res, next) {
         return res.status(400).json({ message: "The username does not exist" });
     }
     try {
-        const isMatch = user.comparePassword(password);
+        const isMatch = await user.comparePassword(password);
         if(!isMatch) {
             return res.status(400).send({ message: "The password is invalid" });
         }
@@ -39,7 +39,6 @@ function preAuthentication(req, res, next) {
     const base64Credentials =  req.headers.authorization.split(' ')[1];
     const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
-
     req.loginCredentials = { username: username.trim(), password: password.trim() };
     if (!username || !password) {
         return res.status(401).json({ message: 'Invalid Authentication token' });
