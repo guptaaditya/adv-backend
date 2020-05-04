@@ -34,6 +34,7 @@ async function verifyEmail(req, res, next) {
             next();
         }
     } catch (e) {
+        console.error(e);
         res.status(400).json({ message: 'The link is invalid' });
     }
 }
@@ -48,6 +49,7 @@ async function getUserVerificationCode(req, res, next) {
         }
         res.status(400).json({ message: 'Username not found' });
     } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Server Error' });
     }
 }
@@ -77,6 +79,7 @@ async function verifyVerificationCode(req, res, next) {
                 next(); // Successfully issue a token for user and then update the verification
             }
         } catch (e) {
+            console.error(e);
             res.status(500).json({ message: 'Server Error' });
         }
     }

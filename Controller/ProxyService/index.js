@@ -15,6 +15,7 @@ async function getLinkPage(req, res, next) {
         htmlData = _.replace(htmlData, /{SHOW_DELAY}/g, showDelay);
         return res.status(200).send(htmlData);
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     }
 }
@@ -41,6 +42,7 @@ async function getOverlay(req, res, next) {
         }
         return res.status(400).json({ message: 'Bad request. Overlay not available' });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     } 
 

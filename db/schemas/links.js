@@ -23,6 +23,7 @@ async function overlayExists(overlayId) {
         const overlayCount = await Overlay.count({ _id: overlayId }); 
         return Boolean(overlayCount > 0);
     } catch (e) {
+        console.error(e);
         throw { status: 400, message: 'Invalid overlayId' };
     }
 }

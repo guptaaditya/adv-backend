@@ -17,8 +17,9 @@ async function getGeneralUsage(req, res, next) {
             { $match: { createdBy: username } },
             { $group: { _id: null, visits: { $sum: "$visits" } } }
         ]);
+        const visits = totalVisits && totalVisits[0] ? totalVisits[0].visits : 0;
         const stats = [
-            { "name": "Site Visits", "value": totalVisits[0].visits },
+            { "name": "Site Visits", "value": visits },
             { "name": "Overlays", "value": totalOverlays },
             { "name": "Links", "value": totalLinks }
         ];
@@ -34,6 +35,7 @@ async function getGeneralUsage(req, res, next) {
             top5Overlays: queries.getTop5OverlaysFromLinks(top5Links),
         });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     } 
 }

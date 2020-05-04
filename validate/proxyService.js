@@ -20,6 +20,7 @@ async function isValidLink(req, res, next) {
         }
         throw { status: 404, message: 'URL not found' };
     } catch (e) {
+        console.error(e);
         if (!e.status || !e.message) {
             throw { status: 400, message: 'Invalid URL' };
             return ;

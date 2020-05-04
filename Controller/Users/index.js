@@ -11,6 +11,7 @@ async function getUser(req, res, next) {
         const user = await User.findOne(req.user).exec();
         res.status(200).json(queries.getUser(user));
     } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Server Error' });
     }
 }
@@ -58,6 +59,7 @@ async function verifyUserEmail(req, res, next) {
         await User.updateOne({ _id: userId }, { isVerified: true }).exec();
         res.redirect(303, '/');        
     } catch (e) {
+        console.error(e);
         res.send('An event has been logged. You are using an Invalid Verification Link');
     }
 }
@@ -67,6 +69,7 @@ async function updateUser(req, res, next) {
         await User.updateOne(req.user, req.parsedParams).exec();
         res.status(200).json({ message: 'User updated' });        
     } catch (e) {
+        console.error(e);
         res.status(400).json({
             message: 'Password is required field'
         });

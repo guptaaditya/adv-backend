@@ -39,6 +39,7 @@ async function getAMonthsPayouts(req, res, next) {
         res.status(200).json(queries.getPayoutsMap(newUsersRegistered));
         return;
     } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Server Error' });
     }
 }

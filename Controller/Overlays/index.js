@@ -59,6 +59,7 @@ async function getOverlay(req, res, next) {
         }
         return res.status(400).json({ message: 'Bad request. Overlay not available' });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     } 
 }
@@ -70,6 +71,7 @@ async function getAllOverlays(req, res, next) {
         const responseOverlays = _.map(overlays, queries.getOverlay);
         return res.status(200).json(responseOverlays);
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     }
 }
@@ -87,6 +89,7 @@ async function deleteOverlay(req, res, next) {
         }
         return res.status(400).json({ message: 'Invalid Overlay Id' });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     }
 }

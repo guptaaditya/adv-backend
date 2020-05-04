@@ -25,6 +25,7 @@ async function createLink(req, res, next) {
         }
         return res.status(500).json({ message: 'Transaction recording failed' });
     } catch (e) {
+        console.error(e);
         if (e.status && e.message) {
             return res.status(e.status).json({ message: e.message });
         }
@@ -47,6 +48,7 @@ async function updateLink(req, res, next) {
         }
         return res.status(400).json({ message: 'Bad request. Link not available' });
     } catch (e) {
+        console.error(e);
         if (e.status && e.message) {
             return res.status(e.status).json({ message: e.message });
         }
@@ -64,6 +66,7 @@ async function getLink(req, res, next) {
         }
         return res.status(400).json({ message: 'Bad request. Link not available' });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     } 
 }
@@ -75,6 +78,7 @@ async function getAllLinks(req, res, next) {
         const responseLinks = _.map(links, queries.getLink);
         return res.status(200).json(responseLinks);
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     }
 }
@@ -92,6 +96,7 @@ async function deleteLink(req, res, next) {
         }
         return res.status(400).json({ message: 'Invalid Link Id' });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     }
 }

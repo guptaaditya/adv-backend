@@ -27,6 +27,7 @@ async function getUserLogIn(req, res, next) {
         const token = await getJwt({ username, usertype: user.role }, tokenExpiry);
         return res.status(200).send(token);
     } catch (e) {
+        console.error(e);
         res.status(500).json({ message: "The server failed to validate password" });
     }
 }
@@ -60,6 +61,7 @@ async function preAuthorization(req, res, next) {
         req.user = { username, role: usertype };
         next();
     } catch (e) {
+        console.error(e);
         return res.status(401).json({ message: 'Invalid token. Token has expired' });
     }
 }
@@ -98,6 +100,7 @@ async function getResetPassToken(req, res, next) {
         await VerificationCodes.updateOne({ username, isUsed: false }, { isUsed: true }).exec();
         return;
     } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Server Error' });
     }
 }

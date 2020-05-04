@@ -6,6 +6,7 @@ async function getUserMembership(req, res, next) {
         const user = await User.findOne(req.user).exec();
         res.status(200).json(queries.getMembership(user.membership));
     } catch (e) {
+        console.error(e);
         res.status(401).json({ message: 'Invalid request' });
     }
 }
@@ -26,6 +27,7 @@ async function upgradeUserMembership(req, res, next) {
         }
         return res.status(500).json({ message: 'Transaction recording failed' });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ message: 'Server Error' });
     }
 }
