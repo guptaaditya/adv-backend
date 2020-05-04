@@ -101,10 +101,34 @@ async function deleteLink(req, res, next) {
     }
 }
 
+async function incrementLinkVisits(linkId) {
+    try {
+        if (!linkId) throw { message: 'No Link ID found. LinkId is a mandatory parameter' };
+        const res = await Link.updateOne(
+            { _id: linkId, isDeleted: false }, 
+            { 
+                $inc: { visits: 1 }, 
+                $set: { lastVisit: Date.now() } 
+            }
+        );
+        if (res.nModified === 1) {
+            if (res.n > 1) {
+                console.log(`Unexpected event: Linkid visit updated ${linkId} 
+                but found more than one document matching`);
+            }
+            return true;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
 module.exports = {
     createLink,
     updateLink,
     getAllLinks,
     getLink,
     deleteLink,
+    incrementLinkVisits,
 }

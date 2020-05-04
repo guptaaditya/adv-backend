@@ -2,7 +2,7 @@ function getOverlay(overlayModel) {
     const {
         id, overlayType, category, template, name, shouldShowOnPageLoad, showDelay, 
         shouldFadePageBackground, positionedBottom, closeButton, logo, background, message,
-        input, button, createdOn, visits, lastVisit
+        input, button, createdOn
     } = overlayModel;
     return {
         id, overlayType, category, template, name, shouldShowOnPageLoad, showDelay, 
@@ -13,7 +13,7 @@ function getOverlay(overlayModel) {
         message, 
         input, 
         button, 
-        createdOn, visits, lastVisit
+        createdOn
     }
 }
 

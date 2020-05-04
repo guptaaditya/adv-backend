@@ -6,14 +6,17 @@ function getTop5Links(links) {
     return _.map(links, linkQueries.getLink);
 }
 
-function getTop5OverlaysFromLinks(links) {
-    return _.map(links, ({ overlay }) => {
-        if(!overlay) return null;
-        return overlayQueries.getOverlay(overlay);
+function getTop5Overlays(overlays) {
+    return _.map(overlays, overlay => {
+        const overlayModel = overlayQueries.getOverlay(overlay);
+        overlayModel.visits = _.reduce(overlay.links, (totalVisits, link) => {
+            return _.add(totalVisits, link.visits);
+        }, 0);
+        return overlayModel;
     });
 }
 
 module.exports = {
     getTop5Links,
-    getTop5OverlaysFromLinks,
+    getTop5Overlays,
 }

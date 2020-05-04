@@ -73,10 +73,15 @@ function Overlays(mongoose) {
         createdBy: { type: String, required: true },
         createdOn: { type: Date, default: Date.now },
         updatedOn: { type: Date, default: Date.now },
-        visits: { type: Number, default: 0 },
-        lastVisit: { type: Date },
         isDeleted: { type: Boolean, default: false },
-      });
+    }, { toJSON: { virtuals: true } });
+    
+    OverlaysSchema.virtual('links', {
+        ref: 'Links',
+        localField: '_id',
+        foreignField: 'overlay',
+        justOne: false
+    });
     return mongoose.model('Overlays', OverlaysSchema, 'overlays');
 }
 

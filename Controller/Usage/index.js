@@ -29,10 +29,14 @@ async function getGeneralUsage(req, res, next) {
             isDeleted: false 
         }).populate('overlay').sort({ 'visits': 'desc' }).limit(5);
 
+        const top5Overlays = await Overlay.find({ 
+            createdBy: username 
+        }).populate('links').sort({ 'visits': 'desc' }).limit(5);
+
         return res.status(200).json({
             stats,
             top5Links: queries.getTop5Links(top5Links),
-            top5Overlays: queries.getTop5OverlaysFromLinks(top5Links),
+            top5Overlays: queries.getTop5Overlays(top5Overlays),
         });
     } catch (e) {
         console.error(e);
