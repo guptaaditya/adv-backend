@@ -1,8 +1,9 @@
 const _ = require('lodash');
+const fs = require('fs'); 
 const queries = require('./queries');
 const { Overlays: Overlay } = require('../../db');
 const constants = require('../../constants');
-
+const { getOverlayHTMLbyId } = require('../ProxyService');
 async function createOverlay(req, res, next) {
     const { username } = req.user;
     try {
@@ -94,10 +95,26 @@ async function deleteOverlay(req, res, next) {
     }
 }
 
+
+async function previewOverlay(req, res, next) {
+    const { overlayId } = req.params;
+    try {
+        let htmlData = fs.readFileSync('./public/helperPreview.html',  {encoding:'utf8', flag:'r'}); 
+        const { outerHtml = '', showDelay = 0 } = await getOverlayHTMLbyId(overlayId);
+        htmlData = _.replace(htmlData, /{OVERLAY_HTML}/g, outerHtml);
+        htmlData = _.replace(htmlData, /{SHOW_DELAY}/g, showDelay);
+        return res.status(200).send(htmlData);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send('Work in progress!');
+    }
+}
+
 module.exports = {
     createOverlay,
     updateOverlay,
     getAllOverlays,
     getOverlay,
     deleteOverlay,
+    previewOverlay,
 }

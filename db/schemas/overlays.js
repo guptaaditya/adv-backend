@@ -44,7 +44,7 @@ function Overlays(mongoose) {
                 text: { type: String, default: '' },
             }, 
             default: {
-                color: '',
+                color: '#ffffff',
                 text: 'Set up your own overlay today',
             }
         },
@@ -65,8 +65,8 @@ function Overlays(mongoose) {
                 name: { type: String, default: '' },
             }, 
             default: {
-                textColor: '',
-                color: '#ffffff',
+                textColor: '#ffffff',
+                color: '#6435C9',
                 name: 'Yes, Get Tips!',
             }
         },

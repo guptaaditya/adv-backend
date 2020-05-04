@@ -59,4 +59,5 @@ module.exports = {
     getLinkPage,
     getLongLinkHtml,
     getOverlay,
+    getOverlayHTMLbyId,
 }

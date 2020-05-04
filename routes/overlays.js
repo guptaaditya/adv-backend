@@ -13,4 +13,7 @@ router.route('/:overlayId')
     .delete(authController.preAuthorization, controller.deleteOverlay)
     .put(authController.preAuthorization, validators.updateOverlay, controller.updateOverlay);
 
+router.route('/preview/:overlayId')
+    .get(controller.previewOverlay);
+
 module.exports = router;
