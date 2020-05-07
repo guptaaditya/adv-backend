@@ -2,6 +2,7 @@ const _ = require('lodash');
 const queries = require('./queries');
 const { Links: Link } = require('../../db');
 const constants = require('../../constants');
+const { getRandomLinkHash } = require('../../helper');
 
 async function createLink(req, res, next) {
     const { targetUrl, overlayId } = req.parsedParams; 
@@ -11,19 +12,11 @@ async function createLink(req, res, next) {
             targetUrl,
             createdBy: username,
             overlay: overlayId,
+            shortUrl: constants.SHORT_LINK_DOMAIN+getRandomLinkHash(),
         });
         if (createdLink.id) {
-            const shortLinkHash = btoa(createdLink.id);
-            const updatedLink = await Link.findByIdAndUpdate(createdLink.id,
-                { shortUrl: constants.SHORT_LINK_DOMAIN+shortLinkHash },
-                { new: true }
-            );
-            if (updatedLink) {
-                return res.status(200).json(queries.getLink(updatedLink));
-            }
-            return res.status(500).json({ message: 'Failed to update short link' });
+            return res.status(200).json(queries.getLink(createdLink));
         }
-        return res.status(500).json({ message: 'Transaction recording failed' });
     } catch (e) {
         console.error(e);
         if (e.status && e.message) {

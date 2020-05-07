@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const SALT = 10;
@@ -57,6 +58,12 @@ function promisifyFunc(asyncFunc) {
     })
 }
 
+function getRandomLinkHash() {
+    const firstRandom = _.random(10, 36);
+    const secondRandom = _.random(10, 36);
+    return (new Date()).getTime().toString(firstRandom) + Math.random().toString(secondRandom).slice(14);
+}
+
 module.exports = {
     hashPass,
     sendEmail,
@@ -64,4 +71,5 @@ module.exports = {
     initializeHelpers,
     getRequestUrl,
     promisifyFunc,
+    getRandomLinkHash,
 };

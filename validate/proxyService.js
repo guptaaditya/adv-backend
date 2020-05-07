@@ -2,16 +2,13 @@ const { getRequestUrl } = require('../helper');
 const { Links: Link } = require('../db');
 
 async function isValidLink(req, res, next) {
-    const { originalUrl } = req;
     try {
-        const hash = originalUrl.substr(1); 
-        const linkId = atob(hash);
         const shortUrl = getRequestUrl(req);
-        const link = await Link.findById(linkId).exec();
+        const link = await Link.findOne({ shortUrl }).exec();
         if (link.targetUrl) {
             //Visits validation #pending as per membership
             req.parsedParams = { 
-                linkId,
+                linkId: link.id,
                 shortUrl,
                 targetUrl: link.targetUrl, 
                 overlayId: link.overlay && link.overlay._id ? link.overlay._id.toJSON(): '',
