@@ -14,7 +14,7 @@ async function isValidLink(req, res, next) {
                 linkId,
                 shortUrl,
                 targetUrl: link.targetUrl, 
-                overlayId: link.overlay,
+                overlayId: link.overlay && link.overlay._id ? link.overlay._id.toJSON(): '',
             };
             return next();
         }

@@ -1,9 +1,10 @@
 function getLink(linkModel) {
+    const { overlay } = linkModel;
     return {
         id: linkModel.id,
         shortUrl: linkModel.shortUrl,
         createdOn: linkModel.createdOn,
-        overlayId: linkModel.overlay._id.toJSON(),
+        overlayId: overlay && overlay._id ? overlay._id.toJSON(): '',
         targetUrl: linkModel.targetUrl,
         visits: linkModel.visits,
     }

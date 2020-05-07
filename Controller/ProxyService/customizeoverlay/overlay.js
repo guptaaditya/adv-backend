@@ -28,6 +28,8 @@ function renderOverlay(featureFlags) {
     const logoClass = `logo ${showLogo ? '': 'hidden'}`;
     const positionClass = positionedBottom ? 'position-bottom': 'position-top';
 
+    const backgroundImage = background.image ? ` background-image: url(${background.image});` : '';
+    
     const logoImage = logo.image 
         ? `<img src='${logo.image}' />`
         : `<div class='dummy-logo'>Logo</div>`;
@@ -66,7 +68,7 @@ function renderOverlay(featureFlags) {
     const innerOverlayHtml = `
         <div 
             class='${widthClassName} ${fontSizeClassName} ${templateClassName} ${positionClass}'
-            style='background-color: ${background.color}; background-image: url(${background.image});'
+            style='background-color: ${background.color};${backgroundImage}'
         >
             <div class='${logoClass}'>
                 <a target='_blank' href='${logo.url || '#'}'>
