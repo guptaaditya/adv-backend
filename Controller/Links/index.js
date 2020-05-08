@@ -1,8 +1,7 @@
 const _ = require('lodash');
 const queries = require('./queries');
 const { Links: Link } = require('../../db');
-const constants = require('../../constants');
-const { getRandomLinkHash } = require('../../helper');
+const { getRandomLinkHash, getProxyServiceDomain } = require('../../helper');
 
 async function createLink(req, res, next) {
     const { targetUrl, overlayId } = req.parsedParams; 
@@ -12,7 +11,7 @@ async function createLink(req, res, next) {
             targetUrl,
             createdBy: username,
             overlay: overlayId,
-            shortUrl: constants.SHORT_LINK_DOMAIN+getRandomLinkHash(),
+            shortUrl: getProxyServiceDomain()+getRandomLinkHash(),
         });
         if (createdLink.id) {
             return res.status(200).json(queries.getLink(createdLink));

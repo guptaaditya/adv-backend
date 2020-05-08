@@ -2,7 +2,7 @@ const _ = require('lodash');
 const queries = require('./queries');
 const { getJwt } = require('../Auth/jwtUtils');
 const { Users: User } = require('../../db');
-const { sendEmail } = require('../../helper');
+const { sendEmail, getApiServiceDomain } = require('../../helper');
 const constants = require('../../constants');
 
 async function getUser(req, res, next) {
@@ -31,8 +31,7 @@ async function createUser(req, res, next) {
             }, 
             constants.EXPIRY_VERIFY_EMAIL
         );
-        let link = `${constants.SHORT_LINK_DOMAIN}`;
-        link = `${link}user/verify/${token}`
+        const link = `${getApiServiceDomain()}user/verify/${token}`
         const subject = 'Verification Email from UTV';
         const html = `<p>Please click the below given link for verification \n ${link}</p>`;
         const email = await sendEmail(otherParams.username.trim(), subject, html);

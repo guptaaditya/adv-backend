@@ -2,6 +2,7 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const SALT = 10;
+const constants  = require('./constants');
 
 function hashPass(pass) {
     const returnValue = bcrypt.hash(pass, SALT);
@@ -64,6 +65,14 @@ function getRandomLinkHash() {
     return (new Date()).getTime().toString(firstRandom) + Math.random().toString(secondRandom).slice(14);
 }
 
+function getProxyServiceDomain() {
+    return `${constants.SHORT_LINK_DOMAIN}:${process.env.APP_PROXY_SERVICE_PORT}/`;
+}
+
+function getApiServiceDomain() {
+    return `${constants.MAIN_BACKEND_LINK_DOMAIN}:${process.env.PORT}/`;
+}
+
 module.exports = {
     hashPass,
     sendEmail,
@@ -72,4 +81,6 @@ module.exports = {
     getRequestUrl,
     promisifyFunc,
     getRandomLinkHash,
+    getProxyServiceDomain,
+    getApiServiceDomain,
 };

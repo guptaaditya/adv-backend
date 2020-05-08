@@ -5,6 +5,7 @@ module.exports = {
     EXPIRY_LOGIN_LONG_TERM_TOKEN: '1000d',
     EXPIRY_VERIFY_EMAIL: '5d',
     VERIFY_EMAIL_KEY: 'YourIDCode',
-    SHORT_LINK_DOMAIN: 'http://localhost:3000/',
+    MAIN_BACKEND_LINK_DOMAIN: `http://localhost`,
+    SHORT_LINK_DOMAIN: 'http://localhost',
     ADMIN_TYPE: 'Powerful-Superuser',
 }
