@@ -5,10 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser= require('body-parser')
 const dotenv = require('dotenv');
+dotenv.config();
 const initializeRouting = require('./routes');
 const { initializeHelpers } = require('./helper');
 
-dotenv.config();
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

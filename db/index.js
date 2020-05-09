@@ -6,10 +6,23 @@ class Mongo {
 
     static async getConnection() {
         if (!Mongo.connection) {
+            const user = process.env.DB_USER;
+            const pwd = process.env.DB_USER_PWD;
+            let connectAuth = '';
+            if(user && pwd) {
+                connectAuth = `${user}:${encodeURIComponent(pwd)}@`;
+            }
+            let port = process.env.DB_PORT;
+            port = port ? `:${port}`: '';
+            
+            const dbName = process.env.DB_NAME || '';
+            const connectionString = `mongodb://${connectAuth}localhost${port}/${dbName}`;
+
             mongoose.connect(
-                'mongodb://localhost/utv',
+                connectionString,
                 { useNewUrlParser: true, useUnifiedTopology: true }
             ).then(conn => {
+                console.log('Connected Mongo');
                 Mongo.connection = conn;
             });
         }
