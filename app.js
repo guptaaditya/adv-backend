@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 
 app.use(express.static('build'));
-app.use('/advertise-overlays/', express.static('build'));
+app.use('/', express.static('build'));
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/build/index.html');
 });
