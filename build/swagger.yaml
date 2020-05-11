@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: "These APIs cater to UTV platform"
   version: "1.0.0"
-  title: "User To Views"
+  title: "Use The Views"
   contact:
     email: "guptaaditya24@gmail.com"
 host: "usetheviews.com"
@@ -590,6 +590,11 @@ definitions:
         type: "string"
       password:
         type: "string"
+    example:
+        username: "jon@orangefury.com"
+        firstname: "Jon"
+        lastname: ""
+        password: "abc@32rfser"
   User-verify:
     type: "object"
     properties:
