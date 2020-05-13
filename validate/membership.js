@@ -2,10 +2,13 @@ const { validate } = require('./utils');
 
 function upgradeMembership(req, res, next) {
     // validate if the call is from localhost or from paypal domain only.
-    // validate the event is payment complete only
     // validate the paypal signature by calling back the paypal API.
-    debugger;
-    console.log(req);
+    // validate the event is payment complete only
+    const eventName = req.body.event_type;
+    if(eventName !== "PAYMENT.SALE.COMPLETED") {
+        res.send(400).json({ message: 'Send Payment sale completion notification' });
+    }
+    console.log('PAYMENT NOTIFICATION', req);
     next();
 }
 

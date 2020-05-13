@@ -23,6 +23,7 @@ initializeRouting(app);
 const buildFolder = 'build1';
 app.use(express.static(buildFolder));
 app.use('/', express.static(buildFolder));
+app.use('/uploaded-images', express.static('uploads'));
 app.get('/*', function (req, res) {
   res.sendFile(__dirname + `/${buildFolder}/index.html`);
 });
