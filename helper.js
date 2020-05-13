@@ -75,7 +75,7 @@ function getProxyServiceDomain() {
 }
 
 function getApiServiceDomain() {
-    return `${process.env.MAIN_BACKEND_LINK_DOMAIN}/`;
+    return `${process.env.MAIN_BACKEND_API_DOMAIN}/`;
 }
 
 module.exports = {
