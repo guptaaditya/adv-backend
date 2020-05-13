@@ -1,5 +1,6 @@
 const queries = require('../Users/queries');
 const { Users: User, Payments: Payment } = require('../../db');
+const constants = require('../../constants');
 
 async function getUserMembership(req, res, next) {
     try {
@@ -23,7 +24,18 @@ async function upgradeUserMembership(req, res, next) {
             info: req.body,
         });
         if (paymentRecorded) {
-            return res.status(200).json({ message: 'Transaction recorded' });
+            const paidMembershipDetails = { ...constants.PAID_MEMBERSHIP };
+            var validityTill = new Date();
+            validityTill.setMonth( validityTill.getMonth() + 1 );
+            paidMembershipDetails.validTill = validityTill;
+
+            const updateMembership = await User.updateOne(
+                { username, isDeleted: false }, 
+                { membership: paidMembershipDetails },
+            ).exec();
+            if (updateMembership.nModified === 1) {
+                return res.status(200).json({ message: 'Transaction recorded' });
+            }
         }
         return res.status(500).json({ message: 'Transaction recording failed' });
     } catch (e) {

@@ -18,14 +18,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser());
 
+initializeRouting(app);
 
-app.use(express.static('build'));
-app.use('/', express.static('build'));
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/build/index.html');
+const buildFolder = 'build1';
+app.use(express.static(buildFolder));
+app.use('/', express.static(buildFolder));
+app.get('/*', function (req, res) {
+  res.sendFile(__dirname + `/${buildFolder}/index.html`);
 });
 
-initializeRouting(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

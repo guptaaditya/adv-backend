@@ -6,7 +6,9 @@ const { hashPass } = require('../helper');
 const { validate } = require('./utils');
 
 function createUser(req, res, next) {
-    const permittedParams = ['username', 'password', 'firstname', 'lastname', 'timezone'];
+    const permittedParams = [
+        'username', 'password', 'firstname', 'lastname', 'timezone', 'referredBy'
+    ];
     const mandatoryParams = ['username', 'password', 'firstname', 'lastname'];
     if(validate(permittedParams, req, res, mandatoryParams)) {
         next();

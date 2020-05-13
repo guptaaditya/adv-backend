@@ -17,7 +17,7 @@ class Mongo {
             
             const dbName = process.env.DB_NAME || '';
             const connectionString = `mongodb://${connectAuth}localhost${port}/${dbName}`;
-
+            console.log(connectionString);
             mongoose.connect(
                 connectionString,
                 { useNewUrlParser: true, useUnifiedTopology: true }

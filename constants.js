@@ -5,7 +5,24 @@ module.exports = {
     EXPIRY_LOGIN_LONG_TERM_TOKEN: '1000d',
     EXPIRY_VERIFY_EMAIL: '5d',
     VERIFY_EMAIL_KEY: 'YourIDCode',
-    MAIN_BACKEND_LINK_DOMAIN: `http://localhost`,
-    SHORT_LINK_DOMAIN: 'http://localhost',
     ADMIN_TYPE: 'Powerful-Superuser',
+    SIGNUP_ROUTE: 'signup/',
+    PAID_MEMBERSHIP: {
+        planName: 'Paid - Full power - Unlimited usage',
+        linksLimit: -1,
+        overlaysLimit: -1,
+        shareLinkLimit: -1,
+        membershipType: 'premium',
+        validTill: null,
+    },
+    FREE_MEMBERSHIP: {
+        planName: 'Free - Basic Usage - Limited',
+        linksLimit: 10,
+        overlaysLimit: 0,
+        shareLinkLimit: 100,
+        membershipType: 'basic',
+        upgradePrice: 25,
+        upgradeCurrency: 'USD',
+        upgradeCurrencySymbol: '$',
+    }
 }

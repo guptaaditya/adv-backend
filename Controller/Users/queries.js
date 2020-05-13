@@ -1,3 +1,5 @@
+const constants = require('../../constants');
+
 function getUser(userModel) {
     return {
         username: userModel.username,
@@ -6,6 +8,7 @@ function getUser(userModel) {
         timezone: userModel.timezone,
         isVerified: userModel.isVerified,
         usertype: userModel.role,
+        referralLink: `${process.env.MAIN_BACKEND_LINK_DOMAIN}/${constants.SIGNUP_ROUTE}?referral=${btoa(userModel.username)}`,
     }
 }
 
@@ -16,6 +19,7 @@ function getMembership(membership) {
         overlaysLimit: membership.overlaysLimit === -1 ? 'Unlimited' : membership.overlaysLimit,
         shareLinkLimit: membership.shareLinkLimit === -1 ? 'Unlimited' : membership.shareLinkLimit,
         type: membership.membershipType,
+        validTill: membership.validTill,
         upgradePrice: membership.upgradePrice,
         upgradeCurrency: membership.upgradeCurrency,
         upgradeCurrencySymbol: membership.upgradeCurrencySymbol

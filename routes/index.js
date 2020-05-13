@@ -1,10 +1,4 @@
-var usersRouter = require('./users');
-var linksRouter = require('./links');
-var overlaysRouter = require('./overlays');
-var membershipRouter = require('./membership');
-var adminRouter = require('./admin');
-var usageRouter = require('./usage');
-var { router: defaultProxyRouter, proxyRouter } = require('./proxyService');
+var routerV1 = require('./v1');
 const cors = require('cors');
 
 function initializeRouting(app) {
@@ -13,14 +7,7 @@ function initializeRouting(app) {
   app.put('*', cors());
   app.get('*', cors());
   app.delete('*', cors());
-  app.use('/user', usersRouter);
-  app.use('/usage', usageRouter);
-  app.use('/link', linksRouter);
-  app.use('/membership', membershipRouter);
-  app.use('/overlay', overlaysRouter);
-  app.use('/admin', adminRouter);
-  app.use('/proxy', proxyRouter);
-  app.use('/:shortLinkHash', defaultProxyRouter);
+  app.use('/v1', routerV1);
 }
 
 module.exports = initializeRouting;

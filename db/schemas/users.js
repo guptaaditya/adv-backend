@@ -10,6 +10,7 @@ function Users(mongoose) {
         registeredOn: { type: Date, default: Date.now },
         isDeleted: { type: Boolean, default: false },
         isVerified: { type: Boolean, default: false },
+        referredBy: { type: String },
         membership: {
             type: {
                 planName: String,
@@ -17,6 +18,7 @@ function Users(mongoose) {
                 overlaysLimit: Number,
                 shareLinkLimit: Number,
                 membershipType: String,
+                validTill: Date,
                 upgradePrice: Number,
                 upgradeCurrency: String,
                 upgradeCurrencySymbol: String,
@@ -32,7 +34,6 @@ function Users(mongoose) {
                 upgradeCurrencySymbol: '$',
             },
         },
-        referredBy: { type: String }
     });
     attachHooks(UsersSchema);
     return mongoose.model('Users', UsersSchema, 'users');

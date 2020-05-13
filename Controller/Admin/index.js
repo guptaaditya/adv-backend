@@ -15,13 +15,14 @@ async function getAMonthsPayouts(req, res, next) {
         4. The users found in step 1 are L1 for users found in 2. step
         5. The users found in step 1 are L2 for users found in 3. step
     */
-
+    const currentDate = new Date();
     try {
         const newUsersRegistered = await User.aggregate(
             [
                 { 
                     $match: { 
                         registeredOn: { $gte: initDate }, 
+                        "membership.validTill": { $ne: null, $gte: currentDate }, 
                         referredBy: { $ne: null } 
                     } 
                 },
