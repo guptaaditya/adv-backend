@@ -4,7 +4,7 @@ function uploadFile(req, res, next) {
         res.status(200).send(`${process.env.IMAGE_UPLOADS}${fileName}`);
         return;
     }
-    res.status(500).send({ message: 'The file could not be saved' });
+    res.status(500).json({ message: 'The file could not be saved' });
 }
 
 module.exports = {

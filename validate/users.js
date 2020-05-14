@@ -72,11 +72,11 @@ async function verifyVerificationCode(req, res, next) {
                 }
             }).exec();
             if (!code) {
-                return res.status(401).send({ message: "Invalid request parameters" });
+                return res.status(401).json({ message: "Invalid request parameters" });
             }
             const isMatch = await code.compareCode(verificationCode);
             if(!isMatch) {
-                return res.status(401).send({ message: "Invalid verification code" });
+                return res.status(401).json({ message: "Invalid verification code" });
             } else {
                 next(); // Successfully issue a token for user and then update the verification
             }

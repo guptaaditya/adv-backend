@@ -16,7 +16,7 @@ async function getUserLogIn(req, res, next) {
     try {
         const isMatch = await user.comparePassword(password);
         if(!isMatch) {
-            return res.status(400).send({ message: "The password is invalid" });
+            return res.status(400).json({ message: "The password is invalid" });
         }
         
         let tokenExpiry = constants.EXPIRY_LOGIN_SHORT_TERM_TOKEN;

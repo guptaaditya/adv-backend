@@ -106,7 +106,7 @@ async function previewOverlay(req, res, next) {
         return res.status(200).send(htmlData);
     } catch (e) {
         console.error(e);
-        return res.status(500).send('Work in progress!');
+        return res.status(500).json({ message: 'Work in progress!' });
     }
 }
 

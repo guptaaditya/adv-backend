@@ -4,6 +4,12 @@ function getFirstDateOfCurrentMonth() {
     return firstDate;
 }
 
+function getCurrentMonthName() {
+    const today = new Date();
+    return today.toLocaleString('default', { month: 'short' });
+}
+
 module.exports = {
     getFirstDateOfCurrentMonth,
+    getCurrentMonthName,
 }
