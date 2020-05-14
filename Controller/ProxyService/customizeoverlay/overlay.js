@@ -51,13 +51,13 @@ function renderOverlay(featureFlags) {
 
     const fbIcon = socialIcons.facebook
         ? `<a target='_blank' href='${socialIcons.facebook}'>
-            <img src="http://localhost:3000/facebook.svg" />
+            <img src="http://${process.env.UI_DOMAIN}/facebook.svg" />
            </a>`
         : '';
 
     const twitterIcon = socialIcons.twitter
         ? `<a target='_blank' href='${socialIcons.twitter}'>
-            <img src="http://localhost:3000/twitter.svg" />
+            <img src="http://${process.env.UI_DOMAIN}/twitter.svg" />
            </a>`
         : '';
 
