@@ -12,6 +12,15 @@ function upgradeMembership(req, res, next) {
     next();
 }
 
+function saveOrderDetails(req, res, next) {
+    const permittedParams = ['order'];
+    const mandatoryParams = ['order'];
+    if (validate(permittedParams, req, res, mandatoryParams)) {
+        next();
+    }
+}
+
 module.exports = {
     upgradeMembership,
+    saveOrderDetails,
 }

@@ -8,4 +8,12 @@ router.route('/')
     .get(authController.preAuthorization, controller.getUserMembership)
     .post(validators.upgradeMembership, controller.upgradeUserMembership);
 
+
+router.route('/order')
+    .post(
+        authController.preAuthorization, 
+        validators.saveOrderDetails, 
+        controller.verifyOrderAndUpgradeMembership
+    );
+
 module.exports = router;

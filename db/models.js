@@ -3,6 +3,7 @@ const Links = require('./schemas/links');
 const Overlays = require('./schemas/overlays');
 const VerificationCodes = require('./schemas/verificationCodes');
 const Payments = require('./schemas/payments');
+const Orders = require('./schemas/orders');
 
 function initializeAllModels(mongoose) {
     return {
@@ -11,6 +12,7 @@ function initializeAllModels(mongoose) {
         Overlays: Overlays(mongoose),
         VerificationCodes: VerificationCodes(mongoose),
         Payments: Payments(mongoose),
+        Orders: Orders(mongoose),
     }
 }
 
