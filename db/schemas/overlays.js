@@ -70,6 +70,16 @@ function Overlays(mongoose) {
                 name: 'Yes, Get Tips!',
             }
         },
+        socialIcons: {
+            type: {
+                facebook: { type: String, default: '' },
+                twitter: { type: String, default: '' },
+            }, 
+            default: {
+                facebook: '',
+                twitter: '',
+            }
+        },
         createdBy: { type: String, required: true },
         createdOn: { type: Date, default: Date.now },
         updatedOn: { type: Date, default: Date.now },

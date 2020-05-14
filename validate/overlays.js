@@ -12,7 +12,7 @@ function updateOverlay(req, res, next) {
     const permittedParams = [
         'name', 'shouldShowOnPageLoad', 'showDelay', 'shouldFadePageBackground', 
         'positionedBottom', 'closeButton', 'logo', 'background', 'message', 'input', 
-        'button'
+        'button', 'socialIcons'
     ];
     const mandatoryParams = ['name'];
     if (validate(permittedParams, req, res, mandatoryParams)) {
