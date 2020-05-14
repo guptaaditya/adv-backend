@@ -44,10 +44,14 @@ function renderOverlay(featureFlags) {
                 placeholder="${input.placeholder}" />
            </div>`
         : '';
-    const buttonHtml = showButton
+    let buttonHtml = showButton
         ? `<button style="background-color: ${button.color}; color: ${button.textColor};">
             ${button.name}</button>`
         : '';
+    
+    if(button.url) {
+        buttonHtml = `<a target='_blank' href='${button.url}'>${buttonHtml}</a>`;
+    }
 
     const fbIcon = socialIcons.facebook
         ? `<a target='_blank' href='${socialIcons.facebook}'>

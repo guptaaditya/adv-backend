@@ -63,11 +63,13 @@ function Overlays(mongoose) {
                 color: { type: String, default: '' },
                 textColor: { type: String, default: '' },
                 name: { type: String, default: '' },
+                url: { type: String, default: '' },
             }, 
             default: {
                 textColor: '#ffffff',
                 color: '#6435C9',
                 name: 'Yes, Get Tips!',
+                url: '',
             }
         },
         socialIcons: {
