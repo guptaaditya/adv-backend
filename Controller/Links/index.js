@@ -66,7 +66,7 @@ async function getLink(req, res, next) {
 async function getAllLinks(req, res, next) {
     const { username } = req.user;
     try {
-        const links = await Link.find({ createdBy: username, isDeleted: false });
+        const links = await Link.find({ createdBy: username, isDeleted: false }).populate('overlay');
         const responseLinks = _.map(links, queries.getLink);
         return res.status(200).json(responseLinks);
     } catch (e) {
