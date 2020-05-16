@@ -40,10 +40,14 @@ async function isUrlAThreat(url) {
             return;
         }
         let isMalicious = false;
-        if(response.statusCode == 200 && body.matches) {
-            isMalicious = true;
-            cb(null, isMalicious);
-            return;
+        if(response.statusCode == 200) {
+            let responseBody = response.body.trim();
+            responseBody = JSON.parse(responseBody);
+            if(responseBody.matches) {
+                isMalicious = true;
+                cb(null, isMalicious);
+                return;
+            }
         }
         cb(null, isMalicious);
     }));

@@ -8,7 +8,7 @@ async function createLink(req, res, next) {
     const { targetUrl, overlayId } = req.parsedParams; 
     const { username } = req.user;
     try {
-        const isMalicious = await isUrlAThreat(targetUrl);
+        const [isMalicious] = await isUrlAThreat(targetUrl);
         if(isMalicious) {
             return res.status(403).json({ displayMessage: 'This URL is malicious and thus blocked by utv.surf' });
         }
@@ -35,7 +35,7 @@ async function updateLink(req, res, next) {
     const { username } = req.user;
     const { linkId } = req.params;
     try {
-        const isMalicious = await isUrlAThreat(targetUrl);
+        const [isMalicious] = await isUrlAThreat(targetUrl);
         if(isMalicious) {
             return res.status(403).json({ displayMessage: 'This URL is malicious and thus blocked by utv.surf' });
         }
