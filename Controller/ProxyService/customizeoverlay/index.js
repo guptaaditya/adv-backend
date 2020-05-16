@@ -2,7 +2,7 @@ const _ = require('lodash');
 const { getFeatureFlagsPerSelection } = require('./utils');
 const background = {};
 const logo = {
-    url: 'http://utv.com',
+    url: `${process.env.UI_DOMAIN}/logo.svg`,
 };
 const message = {
     color: '',

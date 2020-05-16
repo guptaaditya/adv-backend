@@ -2,11 +2,16 @@ const _ = require('lodash');
 const queries = require('./queries');
 const { Links: Link } = require('../../db');
 const { getRandomLinkHash, getProxyServiceDomain } = require('../../helper');
+const { isUrlAThreat } = require('../Google/safe-browsing');
 
 async function createLink(req, res, next) {
     const { targetUrl, overlayId } = req.parsedParams; 
     const { username } = req.user;
     try {
+        const isMalicious = await isUrlAThreat(targetUrl);
+        if(isMalicious) {
+            return res.status(403).json({ displayMessage: 'This URL is malicious and thus blocked by utv.surf' });
+        }
         const createdLink = await Link.create({
             targetUrl,
             createdBy: username,
@@ -30,6 +35,11 @@ async function updateLink(req, res, next) {
     const { username } = req.user;
     const { linkId } = req.params;
     try {
+        const isMalicious = await isUrlAThreat(targetUrl);
+        if(isMalicious) {
+            return res.status(403).json({ displayMessage: 'This URL is malicious and thus blocked by utv.surf' });
+        }
+
         const updateLink = await Link.findOneAndUpdate(
             { _id: linkId, createdBy: username, isDeleted: false },
             { targetUrl, overlay: overlayId },
