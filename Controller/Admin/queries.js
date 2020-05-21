@@ -32,11 +32,11 @@ function getPayoutsMap(newUsersRegistered = []) {
         } else {
             ++referrerInPayout.affiliate1;
         }
-        let L1ReferrersReferrer = _.find(user.referralHierarchy, { username: L1Referrer }).referredBy;
-        if (L1ReferrersReferrer) {
-            const referrersReferrerInPayout = _.find(payouts, { username: L1ReferrersReferrer });
+        let L1ReferrersReferrer = _.find(user.referralHierarchy, { username: L1Referrer });
+        if (L1ReferrersReferrer && L1ReferrersReferrer.referredBy) {
+            const referrersReferrerInPayout = _.find(payouts, { username: L1ReferrersReferrer.referredBy });
             if (!referrersReferrerInPayout) {
-                payouts.push({ username : L1ReferrersReferrer, affiliate1: 0, affiliate2: 1 });
+                payouts.push({ username : L1ReferrersReferrer.referredBy, affiliate1: 0, affiliate2: 1 });
             } else {
                 ++referrersReferrerInPayout.affiliate2;
             }
