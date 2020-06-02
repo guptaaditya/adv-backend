@@ -24,7 +24,7 @@ function Users(mongoose) {
                 upgradeCurrencySymbol: String,
             },
             default: {
-                planName: 'Free - Basic Usage - Limited',
+                planName: 'Sharer account',
                 linksLimit: 10,
                 overlaysLimit: 0,
                 shareLinkLimit: 100,

@@ -8,7 +8,7 @@ module.exports = {
     ADMIN_TYPE: 'Powerful-Superuser',
     SIGNUP_ROUTE: 'signup/',
     PAID_MEMBERSHIP: {
-        planName: 'Paid - Full power - Unlimited usage',
+        planName: 'Creator account',
         linksLimit: -1,
         overlaysLimit: -1,
         shareLinkLimit: -1,
@@ -16,7 +16,7 @@ module.exports = {
         validTill: null,
     },
     FREE_MEMBERSHIP: {
-        planName: 'Free - Basic Usage - Limited',
+        planName: 'Sharer account',
         linksLimit: 10,
         overlaysLimit: 0,
         shareLinkLimit: 100,
