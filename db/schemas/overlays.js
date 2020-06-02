@@ -38,6 +38,12 @@ function Overlays(mongoose) {
                 image: '',
             }
         },
+        title: {
+            type: {
+                color: { type: String, default: '' },
+                text: { type: String, default: '' },
+            }
+        },
         message: {
             type: {
                 color: { type: String, default: '' },
@@ -47,6 +53,11 @@ function Overlays(mongoose) {
                 color: '#ffffff',
                 text: 'Set up your own overlay today',
             }
+        },
+        image: {
+            type: {
+                image: { type: String, default: '' },
+            },
         },
         input: {
             type: {

@@ -11,7 +11,7 @@ function createOverlay(req, res, next) {
 function updateOverlay(req, res, next) {
     const permittedParams = [
         'name', 'shouldShowOnPageLoad', 'showDelay', 'shouldFadePageBackground', 
-        'positionedBottom', 'closeButton', 'logo', 'background', 'message', 'input', 
+        'positionedBottom', 'closeButton', 'logo', 'background', 'title', 'image', 'message', 'input', 
         'button', 'socialIcons'
     ];
     const mandatoryParams = ['name'];

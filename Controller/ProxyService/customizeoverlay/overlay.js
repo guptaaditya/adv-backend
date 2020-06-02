@@ -9,11 +9,15 @@ function renderOverlay(featureFlags) {
         shouldFadePageBackground,
         showLogo,
         showMessage,
+        showImage,
+        showTitle,
         showInput,
         showButton,
         showSocialIcons,
         logo,
         message,
+        image,
+        title,
         input,
         button,
         socialIcons,
@@ -33,14 +37,21 @@ function renderOverlay(featureFlags) {
     const logoImage = logo.image 
         ? `<img src='${logo.image}' />`
         : `<div class='dummy-logo'>Logo</div>`;
-        
+    
+    const popupimage = showImage && image.image 
+        ? `<img width="170" height="50" src="${image.image}" className='img' />`
+        : '';
+    const popuptitle = showTitle && title.text
+        ? `<div class='title' style="color: ${title.color};">${title.text}</div>`
+        : ''; 
+
     const messageHtml = showMessage 
         ? `<div class='message' style="color: ${message.color};">${message.text}</div>`
         : '';
         
     const inputHtml = showInput 
         ? `<div class='input'>
-            <input style="background-color: ${input.color || ''} type='text' 
+            <input style="background-color: ${input.color || ''}" type='text' 
                 placeholder="${input.placeholder}" />
            </div>`
         : '';
@@ -79,6 +90,8 @@ function renderOverlay(featureFlags) {
                     ${logoImage}
                 </a>
             </div>
+            ${popupimage}
+            ${popuptitle}
             ${messageHtml}
             <div class='flexible'>
                 ${inputHtml}

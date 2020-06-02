@@ -8,6 +8,13 @@ const message = {
     color: '',
     text: 'Set up your own overlay today',
 };
+const title = {
+    color: '',
+    text: 'Get more from information',
+};
+const image = {
+    image: `${process.env.REACT_APP_API_HOSTNAME}/logo.svg`,
+};
 const input = {
     placeholder: 'Please enter your email',
     color: '#ffffff'
@@ -43,6 +50,12 @@ function getFeatureFlags(overlay) {
         },
         message: overlay.message || {
             ...message,
+        },
+        title: overlay.title || {
+            ...title,
+        },
+        image: overlay.image || {
+            ...image
         },
         input: overlay.input || {
             ...input,
