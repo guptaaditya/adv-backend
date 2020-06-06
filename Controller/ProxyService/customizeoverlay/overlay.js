@@ -45,10 +45,11 @@ function renderOverlay(featureFlags) {
         ? `<div class='title' style="color: ${title.color};">${title.text}</div>`
         : ''; 
 
+    const messageText = message.text ? _.replace(message.text, /\n/g, '<br />') : '';
     const messageHtml = showMessage 
-        ? `<div class='message' style="color: ${message.color};">${message.text}</div>`
-        : '';
-        
+        ? `<div class='message' style="color: ${message.color};">${messageText}</div>`
+        : '';    
+            
     const inputHtml = showInput 
         ? `<div class='input'>
             <input style="background-color: ${input.color || ''}" type='text' 
