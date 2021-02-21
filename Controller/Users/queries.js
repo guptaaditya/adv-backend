@@ -8,7 +8,7 @@ function getUser(userModel) {
         timezone: userModel.timezone,
         isVerified: userModel.isVerified,
         usertype: userModel.role,
-        referralLink: `${process.env.UI_DOMAIN}/${constants.SIGNUP_ROUTE}?referral=${btoa(userModel.username)}`,
+        referralLink: `${process.env.UI_DOMAIN}?referral=${btoa(userModel.username)}`,
     }
 }
 

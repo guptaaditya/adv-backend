@@ -21,9 +21,10 @@ app.use(cookieParser());
 initializeRouting(app);
 
 const buildFolder = 'build1';
+app.use('/', express.static('site'));
 app.use(express.static(buildFolder));
-app.use('/', express.static(buildFolder));
 app.use('/uploaded-images', express.static('uploads'));
+app.use('/*', express.static(buildFolder));
 app.get('/*', function (req, res) {
   res.sendFile(__dirname + `/${buildFolder}/index.html`);
 });
