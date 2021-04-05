@@ -19,6 +19,7 @@ function hashVerify(providedPass, availablePass) {
 
 async function sendEmail(recipient, subject = '', html) {
     const transporter = nodemailer.createTransport({
+        secure: true,
         service: 'gmail',
         host: "smtp.gmail.com",
         auth: {
