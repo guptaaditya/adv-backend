@@ -48,6 +48,7 @@ async function createUser(req, res, next) {
             ...userDetails,
         });
     } catch(e) {
+        console.error(e);
         res.status(409).json({ message: 'User already exists' });
     }
 }
