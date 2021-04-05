@@ -46,7 +46,7 @@ async function createUser(req, res, next) {
             }
             console.log(`Failed to send verification email to the user ${otherParams.username}`)
         } catch (e) {
-            console.error('Error sending verification email', e);
+            console.error('Error sending verification email', 'The user verification link is'+link, e);
         }
         res.status(200).json({ 
             ...userDetails,
