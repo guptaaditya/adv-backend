@@ -34,16 +34,20 @@ async function createUser(req, res, next) {
         const link = `${getApiServiceDomain()}user/verify/${token}`
         const subject = 'Verification Email from UTV';
         const html = `<p>Please click the below given link for verification \n ${link}</p>`;
-        const email = await sendEmail(otherParams.username.trim(), subject, html);
-        if (email.messageId) {
-            console.log(`Email sent to ${otherParams.username}`, email.messageId);
-            res.status(200).json({
-                ...userDetails,
-                displayMessage: 'An email has been sent to your provided email',
-            });  
-            return;      
+        try {
+            const email = await sendEmail(otherParams.username.trim(), subject, html);
+            if (email.messageId) {
+                console.log(`Email sent to ${otherParams.username}`, email.messageId);
+                res.status(200).json({
+                    ...userDetails,
+                    displayMessage: 'An email has been sent to your provided email',
+                });  
+                return;      
+            }
+            console.log(`Failed to send verification email to the user ${otherParams.username}`)
+        } catch (e) {
+            console.error('Error sending verification email', e);
         }
-        console.log(`Failed to send verification email to the user ${otherParams.username}`)
         res.status(200).json({ 
             ...userDetails,
         });
