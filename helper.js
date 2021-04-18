@@ -19,7 +19,7 @@ function hashVerify(providedPass, availablePass) {
 
 async function sendEmail(recipient, subject = '', html) {
     const transporter = nodemailer.createTransport({
-        secure: true,
+        secure: false,
         service: 'sendgrid',
         host: "smtp.sendgrid.net",
         auth: {
