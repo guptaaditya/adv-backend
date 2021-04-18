@@ -39,7 +39,7 @@ async function sendEmail(recipient, subject = '', html) {
         const result = await transporter.sendMail(mailOptions);
         return result;
     } catch (e) {
-        console.error(e, 'Failed to send email', JSON.stringify(mailOptions), transporter);
+        console.error(e, 'Failed to send email');
     }
 }
 
