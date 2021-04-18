@@ -29,7 +29,7 @@ async function sendEmail(recipient, subject = '', html) {
     });
 
     const mailOptions = {
-        from: 'usertoviews@gmail.com',
+        from: 'em6444.usetheviews.com',
         to: recipient,
         subject,
         html
