@@ -35,8 +35,12 @@ async function sendEmail(recipient, subject = '', html) {
         html
     };
 
-    const result = await transporter.sendMail(mailOptions);
-    return result;
+    try {
+        const result = await transporter.sendMail(mailOptions);
+        return result;
+    } catch (e) {
+        console.error(e, 'Failed to send email', JSON.stringify(mailOptions), transporter);
+    }
 }
 
 function initializeHelpers() {
