@@ -23,8 +23,8 @@ async function sendEmail(recipient, subject = '', html) {
         service: 'sendgrid',
         host: "smtp.sendgrid.net",
         auth: {
-            user: 'apikey',
-            pass: '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'
+            user: 'hello@usetheviews.com',
+            pass: 'G60f$VZkCVKKptRe22Ah'
         }
     });
 
