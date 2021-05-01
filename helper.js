@@ -19,9 +19,10 @@ function hashVerify(providedPass, availablePass) {
 
 async function sendEmail(recipient, subject = '', html) {
     const transporter = nodemailer.createTransport({
-        secure: true,
-        service: 'office365',
+        service: 'Outlook365',
         host: "smtp.office365.com",
+        port: '587',
+        tls: { ciphers: 'SSLv3' },
         auth: {
             user: 'hello@usetheviews.com',
             pass: 'G60f$VZkCVKKptRe22Ah'
