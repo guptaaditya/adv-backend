@@ -13,8 +13,8 @@ const { initializeHelpers } = require('./helper');
 var app = express();
 app.use(cors({
   origin: [
-    "http://localhost",
-    /\.localhost$/,
+    "*",
+    "http://localhost:3000",
     /\.usetheviews\.com$/,
   ]
 }));
