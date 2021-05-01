@@ -19,9 +19,9 @@ function hashVerify(providedPass, availablePass) {
 
 async function sendEmail(recipient, subject = '', html) {
     const transporter = nodemailer.createTransport({
-        secure: false,
-        service: 'sendgrid',
-        host: "smtp.sendgrid.net",
+        secure: true,
+        service: 'office365',
+        host: "smtp.office365.com",
         auth: {
             user: 'hello@usetheviews.com',
             pass: 'G60f$VZkCVKKptRe22Ah'
