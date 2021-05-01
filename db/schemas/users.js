@@ -25,9 +25,9 @@ function Users(mongoose) {
             },
             default: {
                 planName: 'Sharer account',
-                linksLimit: 10,
+                linksLimit: 1000,
                 overlaysLimit: 0,
-                shareLinkLimit: 100,
+                shareLinkLimit: 10000,
                 membershipType: 'basic',
                 upgradePrice: 25,
                 upgradeCurrency: 'USD',
