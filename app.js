@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -10,6 +11,13 @@ const initializeRouting = require('./routes');
 const { initializeHelpers } = require('./helper');
 
 var app = express();
+app.use(cors({
+  origin: [
+    "http://localhost",
+    /\.localhost$/,
+    /\.usetheviews\.com$/,
+  ]
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
