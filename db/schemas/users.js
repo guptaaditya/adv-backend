@@ -10,7 +10,7 @@ function Users(mongoose) {
         registeredOn: { type: Date, default: Date.now },
         isDeleted: { type: Boolean, default: false },
         isVerified: { type: Boolean, default: false },
-        referredBy: { type: String },
+        referredBy: { type: String, default: 'usertoviews@gmail.com' },
         membership: {
             type: {
                 planName: String,
